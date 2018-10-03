@@ -1,16 +1,21 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\{User};
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+    	withoutForeignKeyCheck(function(){
+    		$this->users();
+    	});
+    }
+
+    private function users() {
+    	User::truncate();
+		factory(User::class)->create(['role' => 'convenor']);
+		factory(User::class, 2)->create(['role' => 'organiser']);
+		factory(User::class, 5)->create(['role' => 'attendee']);
     }
 }
