@@ -21,3 +21,11 @@ Route::group([
     Route::apiResource('locations','LocationController');
     Route::apiResource('appointments','AppointmentController');
 });
+
+// Any logged in users
+Route::group([
+    'middleware' => ['auth:api'],
+], function ($router) {
+    Route::get('appointment-slots/all','AppointmentSlotController@getAll');
+    Route::get('appointment-slots/available','AppointmentSlotController@getAvailable');
+});

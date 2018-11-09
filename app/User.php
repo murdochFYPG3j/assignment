@@ -11,7 +11,7 @@ class User extends JwtUser
 		'role',
 	];
 
-	protected $hidden = [ 'password' ];
+	protected $hidden = [ 'password', 'created_at', 'updated_at' ];
 
 	static function createUser($data) 
 	{

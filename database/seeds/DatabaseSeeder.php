@@ -32,6 +32,16 @@ class DatabaseSeeder extends Seeder
 
     private function appointments() {
         Appointment::truncate();
-        factory(Appointment::class, 10)->create();
+        factory(Appointment::class, 2)->create([
+            'attendee_id' => null,
+            'confirmed' => false,
+            'starts_at' => '2018-11-05 11:30:00',
+            'ends_at' => '2018-11-05 12:00:00'
+        ]);
+        factory(Appointment::class, 5)->create();
+        factory(Appointment::class, 5)->create([
+            'attendee_id' => null,
+            'confirmed' => false
+        ]);
     }
 }

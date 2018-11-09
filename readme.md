@@ -15,6 +15,7 @@ Request:
 	"email": "test02@gmail.com",
 	"password": "password",
 	"role": "attendee",
+
 	"first_name": "Darren",
 	"last_name": "Li"
 }
@@ -24,8 +25,6 @@ Response:
     "first_name": "Darren",
     "last_name": "Li",
     "role": "attendee",
-    "updated_at": "2018-10-20 16:31:32",
-    "created_at": "2018-10-20 16:31:32",
     "id": 10
 }
 ```
@@ -63,9 +62,7 @@ Response:
     "email": "test02@gmail.com",
     "first_name": "Darren",
     "last_name": "Li",
-    "role": "attendee",
-    "created_at": "2018-10-20 16:31:32",
-    "updated_at": "2018-10-20 16:31:32"
+    "role": "attendee"
 }
 ```
 
@@ -81,9 +78,7 @@ Response:
     "email": "test02@gmail.com",
     "first_name": "Derek",
     "last_name": "Li",
-    "role": "attendee",
-    "created_at": "2018-10-20 16:31:32",
-    "updated_at": "2018-10-20 16:39:39"
+    "role": "attendee"
 }
 ```
 
@@ -99,9 +94,7 @@ Response:
         "email": "admin@gmail.com",
         "first_name": "Bennie",
         "last_name": "Rowe",
-        "role": "convenor",
-        "created_at": "2018-10-20 16:27:15",
-        "updated_at": "2018-10-20 16:27:15"
+        "role": "convenor"
     },
     ...
 ]
@@ -123,8 +116,6 @@ Response:
     "first_name": "Gowen",
     "last_name": "Smith",
     "role": "attendee",
-    "updated_at": "2018-10-20 16:46:03",
-    "created_at": "2018-10-20 16:46:03",
     "id": 11
 }
 ```
@@ -141,9 +132,7 @@ Response:
     "email": "test003@gmail.com",
     "first_name": "Chad",
     "last_name": "Smith",
-    "role": "attendee",
-    "created_at": "2018-10-20 16:46:03",
-    "updated_at": "2018-10-20 16:47:38"
+    "role": "attendee"
 }
 ```
 
@@ -151,67 +140,6 @@ DELETE `/users/{id}`
 ```
 Response: 200 OK
 ```
-
-
-#### Locations
-
-GET `/locations`
-```
-Response:
-[
-    {
-        "id": 1,
-        "name": "Jaskolski Locks",
-        "address": "47771 Burdette Light\nLake Erna, WI 05006-6933",
-        "postal": "768936",
-        "created_at": "2018-10-20 16:27:15",
-        "updated_at": "2018-10-20 16:27:15"
-    },
-    ...
-]
-```
-
-POST `/locations`
-```
-Request:
-{
-    "name": "JasGelski Locks",
-    "address": "47792 Burdette Light 05006-6933",
-    "postal": "768986"
-}
-Response:
-{
-    "name": "JasGelski Locks",
-    "address": "47792 Burdette Light 05006-6933",
-    "postal": "768986",
-    "updated_at": "2018-10-20 16:49:20",
-    "created_at": "2018-10-20 16:49:20",
-    "id": 6
-}
-```
-
-UPDATE `/locations/{id}`
-```
-Request:
-{
-    "name": "JasGelski Locks 2"
-}
-Response:
-{
-    "id": 6,
-    "name": "JasGelski Locks 2",
-    "address": "47792 Burdette Light 05006-6933",
-    "postal": "768986",
-    "created_at": "2018-10-20 16:49:20",
-    "updated_at": "2018-10-20 16:49:44"
-}
-```
-
-DELETE `/locations/{id}`
-```
-Response: 200 OK
-```
-
 
 
 #### Appointments
@@ -223,12 +151,9 @@ Response:
     {
         "id": 1,
         "attendee_id": 8,
-        "location_id": 5,
         "starts_at": "2018-02-21 04:33:01",
         "ends_at": "2018-02-21 05:03:01",
-        "confirmed": 1,
-        "created_at": "2018-10-20 16:27:15",
-        "updated_at": "2018-10-20 16:27:15"
+        "confirmed": 1
     },
     ...
 ]
@@ -239,7 +164,6 @@ POST `/appointments`
 Request:
 {
     "attendee_id": 7,
-    "location_id": 3,
     "starts_at": "2018-10-21 14:30:00",
     "ends_at": "2018-10-21 15:00:00",
     "confirmed": 1
@@ -247,12 +171,9 @@ Request:
 Response:
 {
     "attendee_id": 7,
-    "location_id": 3,
     "starts_at": "2018-10-21 14:30:00",
     "ends_at": "2018-10-21 15:00:00",
     "confirmed": 1,
-    "updated_at": "2018-10-20 16:50:55",
-    "created_at": "2018-10-20 16:50:55",
     "id": 11
 }
 ```
@@ -268,16 +189,59 @@ Response:
 {
     "id": 11,
     "attendee_id": 7,
-    "location_id": 3,
     "starts_at": "2018-10-21 10:30:00",
     "ends_at": "2018-10-21 11:00:00",
-    "confirmed": 1,
-    "created_at": "2018-10-20 16:50:55",
-    "updated_at": "2018-10-20 16:51:28"
+    "confirmed": 1
 }
 ```
 
 DELETE `/appointments/{id}`
 ```
 Response: 200 OK
+```
+
+#### Additionals
+
+GET `appointment-slots/all?year=2018&month=10`
+GET `appointment-slots/available?year=2018&month=10`
+```
+Response:
+{
+    "year": 2018,
+    "month": 8,
+    "days": {
+        "26": [
+            {
+                "id": 16,
+                "attendee_id": null,
+                "starts_at": "2018-08-26 16:01:24",
+                "ends_at": "2018-08-26 16:31:24",
+                "confirmed": false,
+                "meta": {
+                    "year": 2018,
+                    "month": 8,
+                    "day": 26,
+                    "start_time": "16:01",
+                    "end_time": "16:31"
+                }
+            }
+        ],
+        "29": [
+            {
+                "id": 8,
+                "attendee_id": 1,
+                "starts_at": "2018-08-29 12:36:34",
+                "ends_at": "2018-08-29 13:06:34",
+                "confirmed": false,
+                "meta": {
+                    "year": 2018,
+                    "month": 8,
+                    "day": 29,
+                    "start_time": "12:36",
+                    "end_time": "13:06"
+                }
+            }
+        ]
+    }
+}
 ```
