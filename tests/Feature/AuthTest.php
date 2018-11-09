@@ -11,46 +11,47 @@ class AuthTest extends TestCase
     {
         $user = User::first();
 
-        $this->post('/auth/login')->assertJson(['error' => 'Unauthorized']);
+        $this->post('/auth/login')->assertStatus(401)->assertJson(['error' => 'Unauthorized']);
 
         $this->post('/auth/login', ['email' => $user->email, 'password' => 'password'])
+            ->assertSuccessful()
             ->assertJsonStructure(['access_token']);
     }
 
-    // function test_auth_me()
-    // {
-    //     $this->setTokenAsAdmin();
+    function test_logout()
+    {
+        $this->setToken('convenor');
 
-    //     $this->get("/auth/me", $this->withToken())
-    //         ->assertJsonCount(10, 'data')
-    //         ->assertJsonStructure([
-    //             'data' => [
-    //                 'id', 'email', 'first_name', 'last_name', 'phone_country_code',
-    //                 'phone_number', 'company_id', 'role_id',
-    //                 'company' => ['id', 'name'],
-    //                 'role' => ['id', 'description']
-    //             ]
-    //         ]);
-    // }
+        $this->post("/auth/logout", [], $this->withToken())
+            ->assertJson(['message' => 'Successfully logged out']);
 
-    // function test_logout()
-    // {
-    //     $this->setTokenAsAdmin();
+        $this->get("/auth/me", $this->withToken())->assertStatus(401);
+    }
 
-    //     $this->post("/auth/logout", [], $this->withToken())
-    //         ->assertJson(['message' => 'Successfully logged out']);
+    function test_refresh_token()
+    {
+        $this->setToken('convenor');
 
-    //     $this->get("/auth/me", $this->withToken())->assertJson(['message' => 'The token has been blacklisted']);
-    // }
+        $res = $this->post("/auth/refresh", [], $this->withToken());
 
-    // function test_refresh_token()
-    // {
-    //     $this->setTokenAsAdmin();
+        $res->assertJsonStructure(['access_token']);
 
-    //     $res = $this->post("/auth/refresh", [], $this->withToken());
+        $this->get("/auth/me", ['HTTP_AUTHORIZATION' => 'bearer ' . $res->json()['access_token']])->assertSuccessful();
+    }
 
-    //     $res->assertJsonStructure(['access_token']);
+    function test_register()
+    {
+        $data = factory(User::class)->make()->toArray();
+        
+        $data['password'] = '';
+        $this->post("/auth/register", $data)->assertStatus(422);
+        
+        $data['password'] = 'password';
+        $this->post("/auth/register", $data)->assertSuccessful();
 
-    //     $this->get("/auth/me", ['HTTP_AUTHORIZATION' => 'bearer ' . $res->json()['access_token']])->assertSuccessful();
-    // }
+        // can login
+        $this->post('/auth/login', ['email' => $data['email'], 'password' => $data['password']])
+            ->assertSuccessful()
+            ->assertJsonStructure(['access_token']);   
+    }
 }

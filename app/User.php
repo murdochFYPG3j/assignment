@@ -2,29 +2,43 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-
-class User extends Authenticatable
+class User extends JwtUser 
 {
-    use Notifiable;
+	protected $fillable = [
+		'email',
+		'first_name',
+		'last_name',
+		'role',
+	];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+	protected $hidden = [ 'password' ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+	static function createUser($data) 
+	{
+        $user = new self();
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
+        $user->role = $data['role'];
+        $user->save();
+        return $user;
+	}
+
+	static function makeValidationRules($overrides = [], $required = true)
+	{
+		return parent::_makeValidationRules([
+			'email' => 'email|unique:users,email',
+            'password' => 'min:6',
+            'role' => 'in:attendee,organiser,convenor',
+            'first_name' => '',
+			'last_name' => '',
+		], $overrides, $required);
+	}
+
+	function setPasswordAttribute($password) 
+	{
+		if ($password) 
+			$this->attributes['password'] = \Hash::make($password);
+	}
 }
