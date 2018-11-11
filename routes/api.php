@@ -16,11 +16,13 @@ Route::group([
 
 // Admin Panel
 Route::group([
-    'middleware' => ['auth:api', 'role:convenor'],
+    'middleware' => ['auth:api', 'role:convenor,organizer'],
 ], function ($router) {
     Route::apiResource('users','UserController');
     // Route::apiResource('locations','LocationController');
     Route::apiResource('appointments','AppointmentController');
+    Route::get('/stats', 'StatController@index');
+    Route::post('/import-appointments', 'AppointmentImportController@import');
 });
 
 // Any logged in users
