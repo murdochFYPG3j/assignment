@@ -276,3 +276,26 @@ Response:
     ...
 ]
 ```
+
+GET `/stats`
+```
+Response:
+{
+    "Appointment": {
+        "Pending": 2
+    }
+}
+```
+
+GET `/files/template.csv`
+```
+Respoinse: Download
+```
+
+POST `/import-appointments`
+```
+Request:
+file: UploadFile
+
+Response: 200 OK
+```
