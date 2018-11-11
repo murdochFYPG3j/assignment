@@ -15,5 +15,5 @@ class AppointmentCrudTest extends CrudTest
 
 	function modelClass() { return \App\Appointment::class; }
     function apiPath() { return '/appointments/'; }
-    function keyValue() { return ['starts_at', now()->toIso8601String()]; }
+    function keyValue() { return ['starts_at', now()]; }
 }

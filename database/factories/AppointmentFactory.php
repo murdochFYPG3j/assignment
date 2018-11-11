@@ -9,6 +9,6 @@ $factory->define(App\Appointment::class, function (Faker $faker) {
 		// 'location_id' => App\Location::inRandomOrder()->first()->id,
 		'starts_at' => $datetime = Carbon::instance($faker->dateTimeThisYear()),
 		'ends_at' => (clone $datetime)->addMinutes(30),
-		'confirmed' => $faker->boolean(),
+		'status' => $faker->randomElement(\App\Appointment::Statuses),
     ];
 });

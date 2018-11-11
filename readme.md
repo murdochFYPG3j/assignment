@@ -153,7 +153,7 @@ Response:
         "attendee_id": 8,
         "starts_at": "2018-02-21 04:33:01",
         "ends_at": "2018-02-21 05:03:01",
-        "confirmed": 1
+        "status": "Available"
     },
     ...
 ]
@@ -166,14 +166,14 @@ Request:
     "attendee_id": 7,
     "starts_at": "2018-10-21 14:30:00",
     "ends_at": "2018-10-21 15:00:00",
-    "confirmed": 1
+    "status": "Available"
 }
 Response:
 {
     "attendee_id": 7,
     "starts_at": "2018-10-21 14:30:00",
     "ends_at": "2018-10-21 15:00:00",
-    "confirmed": 1,
+    "status": "Available",
     "id": 11
 }
 ```
@@ -191,7 +191,7 @@ Response:
     "attendee_id": 7,
     "starts_at": "2018-10-21 10:30:00",
     "ends_at": "2018-10-21 11:00:00",
-    "confirmed": 1
+    "status": "Available"
 }
 ```
 
@@ -216,7 +216,7 @@ Response:
                 "attendee_id": null,
                 "starts_at": "2018-08-26 16:01:24",
                 "ends_at": "2018-08-26 16:31:24",
-                "confirmed": false,
+                "status": "Available",
                 "meta": {
                     "year": 2018,
                     "month": 8,
@@ -232,7 +232,7 @@ Response:
                 "attendee_id": 1,
                 "starts_at": "2018-08-29 12:36:34",
                 "ends_at": "2018-08-29 13:06:34",
-                "confirmed": false,
+                "status": "Available",
                 "meta": {
                     "year": 2018,
                     "month": 8,
@@ -244,4 +244,20 @@ Response:
         ]
     }
 }
+```
+
+POST `/auth/reset-password`
+```
+Request:
+{
+    "email": "admin@gmail.com"
+}
+Response: 200 OK
+```
+
+POST `/appointment-slot/{apmt_id}/book`
+POST `/appointment-slot/{apmt_id}/cancel`
+```
+request: NIL
+response: 200 OK
 ```

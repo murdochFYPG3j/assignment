@@ -21,7 +21,7 @@ class AppointmentController extends Controller
 
     public function update(Appointment $appointment)
     {
-       request()->validate(Appointment::makeValidationRules([], $required = false));
+        request()->validate(Appointment::makeValidationRules([], $required = false));
         
         $appointment->update(request()->all());
 

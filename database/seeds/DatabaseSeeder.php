@@ -34,14 +34,14 @@ class DatabaseSeeder extends Seeder
         Appointment::truncate();
         factory(Appointment::class, 2)->create([
             'attendee_id' => null,
-            'confirmed' => false,
+            'status' => Appointment::Statuses[0],
             'starts_at' => '2018-11-05 11:30:00',
             'ends_at' => '2018-11-05 12:00:00'
         ]);
         factory(Appointment::class, 5)->create();
         factory(Appointment::class, 5)->create([
             'attendee_id' => null,
-            'confirmed' => false
+            'status' => Appointment::Statuses[0]
         ]);
     }
 }

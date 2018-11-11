@@ -14,7 +14,8 @@ class CreateAppointmentsTable extends Migration
             // $table->integer('location_id')->unsigned();
             $table->datetime('starts_at');
             $table->datetime('ends_at');
-            $table->boolean('confirmed')->default(false);
+            $table->enum('status', \App\Appointment::Statuses)
+                ->default('Available');
             $table->timestamps();
 
             $table->foreign('attendee_id')->references('id')->on('users');
