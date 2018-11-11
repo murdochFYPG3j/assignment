@@ -258,6 +258,21 @@ Response: 200 OK
 POST `/appointment-slot/{apmt_id}/book`
 POST `/appointment-slot/{apmt_id}/cancel`
 ```
-request: NIL
-response: 200 OK
+Request: NIL
+Response: 200 OK
+```
+
+GET `/my-appointments`
+```
+Response:
+[
+    {
+        "id": 1,
+        "attendee_id": 8,
+        "starts_at": "2018-02-21 04:33:01",
+        "ends_at": "2018-02-21 05:03:01",
+        "status": "Available"
+    },
+    ...
+]
 ```
