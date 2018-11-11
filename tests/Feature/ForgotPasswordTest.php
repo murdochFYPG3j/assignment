@@ -3,18 +3,14 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\User;
 
 class ForgotPasswordTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
+    public function test_forgot_password()
     {
-        $this->assertTrue(true);
+    	$user = User::first();
+
+        $this->post('/reset-password', ['email' => $user->email])->dump();
     }
 }

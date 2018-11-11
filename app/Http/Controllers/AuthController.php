@@ -79,4 +79,9 @@ class AuthController extends Controller
 
         return User::createUser(request()->all());
     }
+
+    protected function resetPassword()
+    {
+        return request()->all();
+    }
 }
