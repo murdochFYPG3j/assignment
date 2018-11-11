@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Mail\ResetPassword;
 use App\User;
 
 class AuthController extends Controller
@@ -16,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'resetPassword']]);
     }
 
     /**
@@ -82,6 +83,16 @@ class AuthController extends Controller
 
     protected function resetPassword()
     {
-        return request()->all();
+        request()->validate(['email' => 'exists:users,email']);
+
+        $email = request('email');
+        $new_password = str_random(8);
+
+        User::whereEmail($email)->update([
+            'password' => \Hash::make($new_password)
+        ]);
+
+        \Mail::to($email)
+            ->send(new ResetPassword($new_password));
     }
 }

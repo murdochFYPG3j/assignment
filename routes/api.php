@@ -11,6 +11,7 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::apiResource('me', 'ProfileController', ['only' => ['index', 'store']]);
 	Route::post('register', 'AuthController@register');
+    Route::post('reset-password', 'AuthController@resetPassword');
 });
 
 // Admin Panel
