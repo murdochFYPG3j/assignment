@@ -15,7 +15,6 @@ Request:
 	"email": "test02@gmail.com",
 	"password": "password",
 	"role": "attendee",
-
 	"first_name": "Darren",
 	"last_name": "Li"
 }
@@ -153,7 +152,21 @@ Response:
         "attendee_id": 8,
         "starts_at": "2018-02-21 04:33:01",
         "ends_at": "2018-02-21 05:03:01",
-        "status": "Available"
+        "status": "Available",
+        "attendee": {
+            "id": 8
+            "email": "test02@gmail.com",
+            "first_name": "Darren",
+            "last_name": "Li",
+            "role": "attendee",
+        },
+        "meta": {
+            "year": 2018,
+            "month": 2,
+            "day": 21,
+            "start_time": "04:33",
+            "end_time": "05:03"
+        }
     },
     ...
 ]
@@ -209,40 +222,60 @@ Response:
 {
     "year": 2018,
     "month": 8,
-    "days": {
-        "26": [
-            {
-                "id": 16,
-                "attendee_id": null,
-                "starts_at": "2018-08-26 16:01:24",
-                "ends_at": "2018-08-26 16:31:24",
-                "status": "Available",
-                "meta": {
-                    "year": 2018,
-                    "month": 8,
-                    "day": 26,
-                    "start_time": "16:01",
-                    "end_time": "16:31"
+    "days": [
+        {
+            "day": 26,
+            "slots": [
+                {
+                    "id": 16,
+                    "attendee_id": null,
+                    "starts_at": "2018-08-26 16:01:24",
+                    "ends_at": "2018-08-26 16:31:24",
+                    "status": "Available",
+                    "attendee": {
+                        "id": 8
+                        "email": "test02@gmail.com",
+                        "first_name": "Darren",
+                        "last_name": "Li",
+                        "role": "attendee",
+                    },
+                    "meta": {
+                        "year": 2018,
+                        "month": 2,
+                        "day": 21,
+                        "start_time": "04:33",
+                        "end_time": "05:03"
+                    }
                 }
-            }
-        ],
-        "29": [
-            {
-                "id": 8,
-                "attendee_id": 1,
-                "starts_at": "2018-08-29 12:36:34",
-                "ends_at": "2018-08-29 13:06:34",
-                "status": "Available",
-                "meta": {
-                    "year": 2018,
-                    "month": 8,
-                    "day": 29,
-                    "start_time": "12:36",
-                    "end_time": "13:06"
+            ]    
+        },
+        {
+            "day": 29,
+            "slots": [
+                {
+                    "id": 8,
+                    "attendee_id": 1,
+                    "starts_at": "2018-08-29 12:36:34",
+                    "ends_at": "2018-08-29 13:06:34",
+                    "status": "Available",
+                    "attendee": {
+                        "id": 8
+                        "email": "test02@gmail.com",
+                        "first_name": "Darren",
+                        "last_name": "Li",
+                        "role": "attendee",
+                    },
+                    "meta": {
+                        "year": 2018,
+                        "month": 2,
+                        "day": 21,
+                        "start_time": "04:33",
+                        "end_time": "05:03"
+                    }
                 }
-            }
-        ]
-    }
+            ]
+        }
+    ]
 }
 ```
 
@@ -297,5 +330,12 @@ POST `/import-appointments`
 Request:
 file: UploadFile
 
+Response: 200 OK
+```
+
+POST `/update-appointments`
+```
+Request:
+[{ "id": 1, "status": "Available" }, { "id": 2, "status": "Available" }]
 Response: 200 OK
 ```
