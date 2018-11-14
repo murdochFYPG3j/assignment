@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Appointment;
+use App\Http\Resources\AppointmentSlotCollection;
 
 class AppointmentController extends Controller
 {
     public function index()
     {
-        return Appointment::all();
+        return new AppointmentSlotCollection(Appointment::all());
     }
 
     public function store()
@@ -31,5 +32,16 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         $appointment->delete();
+    }
+
+    public function batchUpdate()
+    {
+        request()->validate([
+            '*.id' => 'required|numeric|exists:appointments,id'
+        ]);
+
+        collect(request()->all())->each(function($data){
+            Appointment::whereKey($data['id'])->update($data);
+        });
     }
 }

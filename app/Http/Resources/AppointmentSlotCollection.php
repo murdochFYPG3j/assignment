@@ -9,7 +9,7 @@ class AppointmentSlotCollection extends ResourceCollection
 {
     private $groupBy;
 
-    public function __construct($resource, $groupBy)
+    public function __construct($resource, $groupBy = null)
     {
         parent::__construct($resource);
         $this->groupBy = $groupBy;
@@ -39,6 +39,9 @@ class AppointmentSlotCollection extends ResourceCollection
                 'start_time' => $start->format('H:i'),
                 'end_time' => $end->format('H:i'),
             ];
+
+            $appointment['attendee'] = new UserResource($appointment->attendee);
+
             return $appointment;
         });
     }
@@ -51,7 +54,9 @@ class AppointmentSlotCollection extends ResourceCollection
             return [
                 'year' => $data[0]['meta']['year'],
                 'month' => $data[0]['meta']['month'],
-                'days' => $data->groupBy('meta.day')
-            ];        
+                'days' => $data->groupBy('meta.day')->values()->map(function($slots){
+                    return [ 'day' => $slots[0]['meta']['day'], 'slots' => $slots ];
+                })
+            ];
     }
 }

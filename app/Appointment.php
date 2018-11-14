@@ -27,6 +27,11 @@ class Appointment extends Model
 		], $overrides, $required);
 	}
 
+	function attendee()
+	{
+		return $this->belongsTo(User::class);
+	}
+
 	function scopeAvailable($query)
 	{
 		return $query->where('status', self::Statuses[0]);

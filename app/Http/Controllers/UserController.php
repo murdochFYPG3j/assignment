@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\User;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return User::all();
+        return UserResource::collection(User::all());
     }
 
     public function store()

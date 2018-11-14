@@ -23,7 +23,8 @@ class AppointmentFunctionsTest extends TestCase
     		'month' => $date->month,
     	]);
 
-        $this->get("/appointment-slots/available?$query" , $this->withToken())->assertOk();
+        $this->get("/appointment-slots/available?$query" , $this->withToken())
+            ->assertOk();
     }
 
     public function test_get_all_appointments()

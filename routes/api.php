@@ -23,6 +23,7 @@ Route::group([
     Route::apiResource('appointments','AppointmentController');
     Route::get('/stats', 'StatController@index');
     Route::post('/import-appointments', 'AppointmentImportController@import');
+    Route::post('/update-appointments', 'AppointmentController@batchUpdate');
 });
 
 // Any logged in users
