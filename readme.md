@@ -339,3 +339,13 @@ Request:
 [{ "id": 1, "status": "Available" }, { "id": 2, "status": "Available" }]
 Response: 200 OK
 ```
+
+POST `/create-appointments`
+```
+Request:
+[
+    { "starts_at": "2018-07-03 01:00:00", "ends_at": "2018-07-03 02:00:00" }, 
+    { "starts_at": "2018-07-05 01:00:00", "ends_at": "2018-07-05 02:00:00" }
+]
+Response: 200 OK
+```
