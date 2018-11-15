@@ -32,7 +32,7 @@ class AppointmentCrudTest extends CrudTest
             function($a) use ($toStatus) { $a['status'] = $toStatus; return $a; }
         )->toArray();
 
-        $this->post("/update-appointments", $postData, $this->withToken())->assertOk();
+        $this->post("/create-or-update-appointments", $postData, $this->withToken())->assertOk();
 
         $this->assertEquals($fromCurrent - count($apmts), Appointment::whereStatus($fromStatus)->count());
         $this->assertEquals($toCount + count($apmts), Appointment::whereStatus($toStatus)->count());
@@ -51,7 +51,7 @@ class AppointmentCrudTest extends CrudTest
             })
             ->toArray();
 
-        $this->post("/create-appointments", $postData, $this->withToken())
+        $this->post("/create-or-update-appointments", $postData, $this->withToken())
             ->assertOk();
 
         $this->assertEquals($initialCount + 3, Appointment::count());

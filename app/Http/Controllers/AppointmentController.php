@@ -34,26 +34,20 @@ class AppointmentController extends Controller
         $appointment->delete();
     }
 
-    public function batchCreate()
+    public function batchCreateOrUpdate()
     {
         $data = request()->validate([
-            '*.starts_at' => 'required|date',
-            '*.ends_at' => 'required|date'
+            '*.id' => 'nullable|numeric|exists:appointments,id',
+            '*.starts_at' => 'date',
+            '*.ends_at' => 'date',
+            '*.status' => 'string'
         ]);
 
         collect($data)->each(function($apmt){
-            Appointment::create($apmt);
-        });
-    }
-
-    public function batchUpdate()
-    {
-        request()->validate([
-            '*.id' => 'required|numeric|exists:appointments,id'
-        ]);
-
-        collect(request()->all())->each(function($data){
-            Appointment::whereKey($data['id'])->update($data);
+            Appointment::updateOrCreate(
+                ['id' => $apmt['id'] ?? null],
+                collect($apmt)->except('id')->toArray()
+            );
         });
     }
 }

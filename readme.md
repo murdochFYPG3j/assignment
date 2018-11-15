@@ -333,14 +333,14 @@ file: UploadFile
 Response: 200 OK
 ```
 
-POST `/update-appointments`
+POST `/create-or-update-appointments`
 ```
 Request:
 [{ "id": 1, "status": "Available" }, { "id": 2, "status": "Available" }]
 Response: 200 OK
 ```
 
-POST `/create-appointments`
+POST `/create-or-update-appointments`
 ```
 Request:
 [
