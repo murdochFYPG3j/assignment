@@ -37,4 +37,23 @@ class AppointmentCrudTest extends CrudTest
         $this->assertEquals($fromCurrent - count($apmts), Appointment::whereStatus($fromStatus)->count());
         $this->assertEquals($toCount + count($apmts), Appointment::whereStatus($toStatus)->count());
     }
+
+    public function test_batch_create_appointments()
+    {
+        $initialCount = Appointment::count();
+
+        $postData = factory(Appointment::class, 3)->make()
+            ->map(function($apmt){
+                return [
+                    'starts_at' => $apmt['starts_at']->format('Y-m-d H:i:s'),
+                    'ends_at' => $apmt['ends_at']->format('Y-m-d H:i:s')
+                ];
+            })
+            ->toArray();
+
+        $this->post("/create-appointments", $postData, $this->withToken())
+            ->assertOk();
+
+        $this->assertEquals($initialCount + 3, Appointment::count());
+    }
 }

@@ -34,6 +34,18 @@ class AppointmentController extends Controller
         $appointment->delete();
     }
 
+    public function batchCreate()
+    {
+        $data = request()->validate([
+            '*.starts_at' => 'required|date',
+            '*.ends_at' => 'required|date'
+        ]);
+
+        collect($data)->each(function($apmt){
+            Appointment::create($apmt);
+        });
+    }
+
     public function batchUpdate()
     {
         request()->validate([

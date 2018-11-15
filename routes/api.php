@@ -22,8 +22,9 @@ Route::group([
     // Route::apiResource('locations','LocationController');
     Route::apiResource('appointments','AppointmentController');
     Route::get('/stats', 'StatController@index');
-    Route::post('/import-appointments', 'AppointmentImportController@import');
+    Route::post('/create-appointments', 'AppointmentController@batchCreate');
     Route::post('/update-appointments', 'AppointmentController@batchUpdate');
+    Route::post('/import-appointments', 'AppointmentImportController@import');
 });
 
 // Any logged in users
