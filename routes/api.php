@@ -31,7 +31,7 @@ Route::group([
     'middleware' => ['auth:api'],
 ], function ($router) {
     Route::get('my-appointments','MyAppointmentController@index');
-    
+
     Route::get('appointment-slots/all','AppointmentSlotController@getAll');
     Route::get('appointment-slots/available','AppointmentSlotController@getAvailable');
 

@@ -23,7 +23,7 @@ class AppointmentController extends Controller
     public function update(Appointment $appointment)
     {
         request()->validate(Appointment::makeValidationRules([], $required = false));
-        
+
         $appointment->update(request()->all());
 
         return $appointment;
@@ -44,7 +44,7 @@ class AppointmentController extends Controller
         ]);
 
         collect($data)->each(function($apmt){
-            Appointment::updateOrCreate(
+            $apmt = Appointment::updateOrCreate(
                 ['id' => $apmt['id'] ?? null],
                 collect($apmt)->except('id')->toArray()
             );

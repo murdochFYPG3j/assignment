@@ -1,11 +1,14 @@
 <?php
 
 namespace App;
+use Carbon\Carbon;
 
 class Appointment extends Model
 {
 	const Statuses = ['Available', 'Pending', 'Confirmed'];
-	
+
+	const zuluFormat = 'Y-m-d\TH:i:s\Z';
+
 	protected $fillable = [
 		'location_id',
 		'starts_at',
@@ -46,4 +49,18 @@ class Appointment extends Model
 	{
 		return $query->where('status', self::Statuses[2]);
 	}
+
+    function setStartsAtAttribute($input) {
+    	$isZulu = ends_with($input, 'Z');
+    	$this->attributes['starts_at'] = $isZulu ?
+	    	Carbon::createFromFormat(self::zuluFormat, $input)->addHours(8) :
+	    	Carbon::parse($input);
+    }
+
+    function setEndsAtAttribute($input) {
+    	$isZulu = ends_with($input, 'Z');
+    	$this->attributes['ends_at'] = $isZulu ?
+	    	Carbon::createFromFormat(self::zuluFormat, $input)->addHours(8) :
+	    	Carbon::parse($input);
+    }
 }
