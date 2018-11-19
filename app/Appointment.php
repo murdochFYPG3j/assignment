@@ -7,7 +7,7 @@ class Appointment extends Model
 {
 	const Statuses = ['Available', 'Pending', 'Confirmed'];
 
-	const zuluFormat = 'Y-m-d\TH:i:s\Z';
+	const zuluFormat = 'Y-m-d\TH:i:s\.000\Z';
 
 	protected $fillable = [
 		'location_id',

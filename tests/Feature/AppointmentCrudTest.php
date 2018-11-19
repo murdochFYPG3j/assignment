@@ -45,7 +45,8 @@ class AppointmentCrudTest extends CrudTest
         $postData = factory(Appointment::class, 3)->make()
             ->map(function($apmt){
                 return [
-                    'starts_at' => $apmt['starts_at']->format(Appointment::zuluFormat),
+                    'starts_at' => '2018-11-30T18:00:00.000Z',
+                    // 'starts_at' => $apmt['starts_at']->format(Appointment::zuluFormat),
                     'ends_at' => $apmt['ends_at']->format(Appointment::zuluFormat)
                     // 'starts_at' => $apmt['starts_at']->format('Y-m-d H:i:s'),
                     // 'ends_at' => $apmt['ends_at']->format('Y-m-d H:i:s')
